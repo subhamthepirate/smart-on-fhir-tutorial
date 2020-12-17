@@ -73,29 +73,26 @@
       <script src='./lib/js/cerner-smart-embeddable-lib-1.0.0.min.js'></script>
     -->
 
-    <!-- Application-level javascript-->
-    <script src='./src/js/example-smart-app.js'></script>
+    <script src='./lib/es6-shim-0.35.1.min.js'></script>
+<script src='./src/js/example-smart-app.js'></script>
+<script src='./lib/fhir-client-v0.1.11.js'></script>
 
-    <!-- FHIR Client JS Library -->
-    <script src='./lib/js/fhir-client-v0.1.12.js'></script>
+<!-- Prevent session bleed caused by single threaded embedded browser and sessionStorage API -->
+<!-- https://github.com/cerner/fhir-client-cerner-additions -->
+<script src='./lib/fhir-client-cerner-additions-1.0.0.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+  extractData().then(
+    //Display Patient Demographics and Observations if extractData was success
+    function(p) {
+      drawVisualization(p);
+    },
 
-    <!-- Prevent session bleed caused by single threaded embedded browser and sessionStorage API -->
-    <!-- https://github.com/cerner/fhir-client-cerner-additions -->
-    <script src='./lib/js/fhir-client-cerner-additions-1.0.0.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>
-      extractData().then(
-        //Display Patient Demographics and Observations if extractData was success
-        function(p) {
-          drawVisualization(p);
-        },
-
-        //Display 'Failed to call FHIR Service' if extractData failed
-        function() {
-          $('#loading').hide();
-          $('#errors').html('<p> Failed to call FHIR Service </p>');
-        }
-      );
-    </script>
+    //Display 'Failed to call FHIR Service' if extractData failed
+    function() {
+      $('#errors').html('<p> Failed to call FHIR Service </p>');
+    }
+  );
+</script>
   </body>
 </html>
